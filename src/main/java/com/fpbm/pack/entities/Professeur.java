@@ -10,6 +10,9 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Professeur extends Personne{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(name = "grade")
     private String grade;

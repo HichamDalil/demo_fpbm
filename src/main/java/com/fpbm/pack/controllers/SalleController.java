@@ -2,6 +2,7 @@ package com.fpbm.pack.controllers;
 import com.fpbm.pack.entities.Departement;
 import com.fpbm.pack.entities.Salle;
 
+
 import com.fpbm.pack.serviceimpl.DepartementServiceImpl;
 import com.fpbm.pack.serviceimpl.SalleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,24 +24,64 @@ public class SalleController {
 
 
     @GetMapping("/")
-    public String viewHomePageSalle(Model model) {
+    public String viewHomePage(Model model) {
         List<Salle> listsalle = salleService.getAll();
         model.addAttribute("listsalle", listsalle);
         System.out.print("Get / ");
-        return "index";
+        return "home";
     }
+
     @GetMapping("/homedep")
     public String viewHomePagedep(Model model) {
         List<Departement> departementList=dep_serv.getAll();
         model.addAttribute("departementList", departementList);
-        System.out.print("Get /dep ");
+        System.out.print("Get /homedep ");
         return "homedepartement";
     }
+    @GetMapping("/newdep")
+    public String addDep(Model model) {
+        model.addAttribute("dep", new Departement());
+        return "newDepartement";
+    }
+    @RequestMapping(value = "/savedep", method = RequestMethod.POST)
+    public String saveDep(@ModelAttribute("Dep") Departement d) {
+        dep_serv.save(d);
+        return "redirect:/homedepartement";
+    }
+    @RequestMapping("/deletedep/{id}")
+    public String deletedep(@PathVariable(name = "id") long id) {
+        dep_serv.delete(id);
+        return "redirect:/homedepartement";
+    }
+    @RequestMapping("/editdep/{id}")
+    public ModelAndView showEditPageDepartement(@PathVariable(name = "id") long id) {
+        ModelAndView mav = new ModelAndView("newDep");
+        Departement d = dep_serv.getOne(id);
+        mav.addObject("dep", d);
+        return mav;
+    }
+    @GetMapping("/homesalle")
+    public String viewHomePageSalle(Model model) {
+        List<Salle> listsalle = salleService.getAll();
+        model.addAttribute("listsalle", listsalle);
+        System.out.print("Get / ");
+        return "homesalle";
+    }
+    //****************************************************************
+    @GetMapping("/getsalle/{name}")
+    public ModelAndView showSalle_findbyname(@PathVariable(name = "name")String name) {
+        ModelAndView mav = new ModelAndView("sallebyname");
+        Salle listsalle = salleService.getByname(name);
+        mav.addObject("salle", listsalle);
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+        System.out.print("Get /getsalle/{name} ");
+        return mav;
+    }
+    //****************************************************************
+    @RequestMapping(value = "/saveSalle", method = RequestMethod.POST)
     public String saveSalle(@ModelAttribute("salle") Salle s) {
         salleService.save(s);
-        return "redirect:/";
+        return "redirect:/saveSalle";
     }
     @GetMapping("/newSalle")
     public String add(Model model) {
@@ -56,15 +97,11 @@ public class SalleController {
 
     }
 
-   /* @DeleteMapping("/delete/{id}")
-    public String deleteSalle(@PathVariable(name = "id") Long id){
-        salleService.delete(id);
-        return "Deleted Successfully.................";
-    }*/
+
    @RequestMapping("/deleteSalle/{id}")
    public String deletesalle(@PathVariable(name = "id") long id) {
        salleService.delete(id);
-       return "redirect:/";
+       return "redirect:/deleteSalle";
    }
 
 }

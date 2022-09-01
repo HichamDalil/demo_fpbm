@@ -21,6 +21,10 @@ public class SalleServiceImpl implements SalleService {
         return salleRepository.findAll();
     }
     @Override
+    public Salle getByname(String name) {
+        return salleRepository.findByName(name);
+    }
+    @Override
     public Salle getOne(Long id) {
         return salleRepository.findById(id).get();
     }
@@ -31,4 +35,6 @@ public class SalleServiceImpl implements SalleService {
     public void delete(Long id) {
         salleRepository.deleteById(id);
     }
+
+
 }
