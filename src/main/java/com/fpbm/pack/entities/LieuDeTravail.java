@@ -15,7 +15,7 @@ public class LieuDeTravail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToMany(targetEntity=Professeur.class, mappedBy="professeurCollectionLieu")
+    @OneToMany(targetEntity=Professeur.class, mappedBy="LieuDeTravail")
     private Collection<Professeur> professeurCollectionLieu ;
 
 }

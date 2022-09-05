@@ -12,6 +12,6 @@ public class Extern {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToMany(targetEntity= Professeur.class, mappedBy="professeurCollectionExtern")
-    private Collection<Professeur> professeurCollectionExtern ;
+    @OneToMany(targetEntity= Professeur.class, mappedBy="extern")
+    private Collection<Professeur> professeurExtern ;
 }

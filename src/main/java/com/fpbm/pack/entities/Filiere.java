@@ -19,17 +19,17 @@ public class Filiere {
 
     // *********************************
     @ManyToOne(targetEntity=Departement.class)
-    private Departement departement_iddepartement;
+    private Departement departement;
 
     @ManyToOne( targetEntity=Type.class)
-    private Type filiereCollectionType;
+    private Type Type;
 
     @ManyToOne(targetEntity=Professeur.class)
     private Professeur filiereCollectionProfesseur;
 
 
-    @OneToMany( targetEntity=Semester.class, mappedBy="filiereCollectionSemester" )
-    private Collection<Semester> filiereCollectionSemester;
+    @OneToMany( targetEntity=Semester.class, mappedBy="filiere" )
+    private Collection<Semester> semester;
 
 
     @OneToMany( targetEntity=Etudiant.class, mappedBy="etudiantCollectionFiliere" )
@@ -44,11 +44,11 @@ public class Filiere {
     }
 
     public Departement getDepartement_iddepartement() {
-        return departement_iddepartement;
+        return departement;
     }
 
     public Type getFiliereCollectionType() {
-        return filiereCollectionType;
+        return Type;
     }
 
     public Professeur getFiliereCollectionProfesseur() {
@@ -56,7 +56,7 @@ public class Filiere {
     }
 
     public Collection<Semester> getFiliereCollectionSemester() {
-        return filiereCollectionSemester;
+        return semester;
     }
 
     public Collection<Etudiant> getEtudiantCollectionFiliere() {
@@ -72,11 +72,11 @@ public class Filiere {
     }
 
     public void setDepartement_iddepartement(Departement departement_iddepartement) {
-        this.departement_iddepartement = departement_iddepartement;
+        this.departement = departement_iddepartement;
     }
 
     public void setFiliereCollectionType(Type filiereCollectionType) {
-        this.filiereCollectionType = filiereCollectionType;
+        this.Type = filiereCollectionType;
     }
 
     public void setFiliereCollectionProfesseur(Professeur filiereCollectionProfesseur) {
@@ -84,7 +84,7 @@ public class Filiere {
     }
 
     public void setFiliereCollectionSemester(Collection<Semester> filiereCollectionSemester) {
-        this.filiereCollectionSemester = filiereCollectionSemester;
+        this.semester = filiereCollectionSemester;
     }
 
     public void setEtudiantCollectionFiliere(Collection<Etudiant> etudiantCollectionFiliere) {
