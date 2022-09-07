@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -17,6 +18,6 @@ public class Annee {
     private long id;
     @Column(name = "annee")
     private String annee;
-    @OneToMany( targetEntity=ProfesseurHasModule.class, mappedBy="professeurHasModuleCollectionAnnee" )
-    private Collection<ProfesseurHasModule> professeurHasModuleCollectionAnnee;
+    @OneToMany( targetEntity=ProfesseurHasModule.class, mappedBy="professeurHasModuleCollectionAnnee" ,fetch = FetchType.EAGER)
+    private Set<ProfesseurHasModule> professeurHasModuleCollectionAnnee;
 }

@@ -2,13 +2,17 @@ package com.fpbm.pack.entities;
 
 import lombok.AllArgsConstructor;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor @Getter @Setter
 public class Filiere {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,66 +32,12 @@ public class Filiere {
     private Professeur filiereCollectionProfesseur;
 
 
-    @OneToMany( targetEntity=Semester.class, mappedBy="filiere" )
-    private Collection<Semester> semester;
+    @OneToMany( targetEntity=Semester.class, mappedBy="filiere" ,fetch = FetchType.EAGER)
+    private Set<Semester> semester;
 
 
-    @OneToMany( targetEntity=Etudiant.class, mappedBy="etudiantCollectionFiliere" )
-    private Collection<Etudiant> etudiantCollectionFiliere;
+    @OneToMany( targetEntity=Etudiant.class, mappedBy="etudiantCollectionFiliere" ,fetch = FetchType.EAGER)
+    private Set<Etudiant> etudiantCollectionFiliere;
 
-    public long getId() {
-        return id;
-    }
 
-    public String getName() {
-        return name;
-    }
-
-    public Departement getDepartement_iddepartement() {
-        return departement;
-    }
-
-    public Type getFiliereCollectionType() {
-        return Type;
-    }
-
-    public Professeur getFiliereCollectionProfesseur() {
-        return filiereCollectionProfesseur;
-    }
-
-    public Collection<Semester> getFiliereCollectionSemester() {
-        return semester;
-    }
-
-    public Collection<Etudiant> getEtudiantCollectionFiliere() {
-        return etudiantCollectionFiliere;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDepartement_iddepartement(Departement departement_iddepartement) {
-        this.departement = departement_iddepartement;
-    }
-
-    public void setFiliereCollectionType(Type filiereCollectionType) {
-        this.Type = filiereCollectionType;
-    }
-
-    public void setFiliereCollectionProfesseur(Professeur filiereCollectionProfesseur) {
-        this.filiereCollectionProfesseur = filiereCollectionProfesseur;
-    }
-
-    public void setFiliereCollectionSemester(Collection<Semester> filiereCollectionSemester) {
-        this.semester = filiereCollectionSemester;
-    }
-
-    public void setEtudiantCollectionFiliere(Collection<Etudiant> etudiantCollectionFiliere) {
-        this.etudiantCollectionFiliere = etudiantCollectionFiliere;
-    }
 }

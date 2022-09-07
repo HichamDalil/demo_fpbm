@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity
@@ -18,6 +19,6 @@ public class Etudiant extends Personne{
     private String nbApogee;
     @ManyToOne(targetEntity=Filiere.class)
     private Filiere etudiantCollectionFiliere;
-    @OneToMany(targetEntity= ProfesseurHMoHEt.class, mappedBy="professeurHasModuleHasEtudiantCollectionEtudiant")
-    private Collection<ProfesseurHMoHEt> professeurHasModuleHasEtudiantCollectionEtudiant;
+    @OneToMany(targetEntity= ProfesseurHMoHEt.class, mappedBy="professeurHasModuleHasEtudiantCollectionEtudiant",fetch = FetchType.EAGER)
+    private Set<ProfesseurHMoHEt> professeurHasModuleHasEtudiantCollectionEtudiant;
 }

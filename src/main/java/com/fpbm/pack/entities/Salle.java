@@ -1,14 +1,17 @@
 package com.fpbm.pack.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor @Getter @Setter
 public class Salle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,32 +23,10 @@ public class Salle {
     @Column(name = "nombreSurveillant")
     private long nombreSurveillant;
 
-    @OneToMany( targetEntity=Soutenance.class, mappedBy="soutenance_idsoutenance" )
-    private Collection<Soutenance> soutenance_idsoutenance;
-    @OneToMany( targetEntity=Examen.class, mappedBy="examen_module" )
-    private Collection<Examen> examen_module;
+    @OneToMany( targetEntity=Soutenance.class, mappedBy="soutenance_idsoutenance" ,fetch = FetchType.EAGER)
+    private Set<Soutenance> soutenance_idsoutenance;
+    @OneToMany( targetEntity=Examen.class, mappedBy="examen_module" ,fetch = FetchType.EAGER)
+    private Set<Examen> examen_module;
 
-    public void setId(long id) {
-        this.id = id;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setNombreSurveillant(long nombreSurveillant) {
-        this.nombreSurveillant = nombreSurveillant;
-    }
-
-    public void setCapaciteEtudiant(long capaciteEtudiant) {
-        this.capaciteEtudiant = capaciteEtudiant;
-    }
-
-    public String getName() {return name;  }
-
-    public long getCapaciteEtudiant() {return capaciteEtudiant;   }
-
-    public long getNombreSurveillant() {return nombreSurveillant;}
-
-    public long getId() {return id;  }
 }

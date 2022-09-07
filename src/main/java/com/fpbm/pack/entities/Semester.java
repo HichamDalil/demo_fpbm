@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -17,8 +18,8 @@ public class Semester {
     private long id;
     @Column(name = "name_semester")
     private String name_semester;
-    @OneToMany(targetEntity= Module.class, mappedBy="semester")
-    private Collection<Module> moduleCollectionSemester;
+    @OneToMany(targetEntity= Module.class, mappedBy="semester",fetch = FetchType.EAGER)
+    private Set<Module> moduleCollectionSemester;
     @ManyToOne(targetEntity=Filiere.class)
     private Filiere filiere;
 }

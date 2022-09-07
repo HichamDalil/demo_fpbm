@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 
@@ -19,6 +20,6 @@ public class ProfesseurHMoHEt {
     private ProfesseurHasModule professeurHasModule;
     @ManyToOne(targetEntity=Etudiant.class)
     private Etudiant professeurHasModuleHasEtudiantCollectionEtudiant;
-    @OneToMany(targetEntity= ExamenHPrHMoHEt.class, mappedBy="examens")
-    private Collection<ExamenHPrHMoHEt> examens ;
+    @OneToMany(targetEntity= ExamenHPrHMoHEt.class, mappedBy="examens",fetch = FetchType.EAGER)
+    private Set<ExamenHPrHMoHEt> examens ;
 }

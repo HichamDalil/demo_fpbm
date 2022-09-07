@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -19,12 +20,12 @@ public class ProfesseurHasModule {
     private Courstdtp professeurHasModuleCollectionCoursTDTP;
     @ManyToOne(targetEntity=Section.class)
     private Section professeurHasModuleCollectionSection;
-    @OneToMany( targetEntity=Examen.class, mappedBy="examen_prof" )
-    private Collection<Examen> examen_prof;
+    @OneToMany( targetEntity=Examen.class, mappedBy="examen_prof" ,fetch = FetchType.EAGER)
+    private Set<Examen> examen_prof;
     @ManyToOne(targetEntity=Professeur.class)
     private Professeur prof_module;
     @ManyToOne(targetEntity= Module.class)
     private Module professeurHasModuleCollection;
-    @OneToMany(targetEntity= ProfesseurHMoHEt.class, mappedBy="professeurHasModule")
-    private Collection<ProfesseurHMoHEt> professeurHasModule;
+    @OneToMany(targetEntity= ProfesseurHMoHEt.class, mappedBy="professeurHasModule",fetch = FetchType.EAGER)
+    private Set<ProfesseurHMoHEt> professeurHasModule;
 }

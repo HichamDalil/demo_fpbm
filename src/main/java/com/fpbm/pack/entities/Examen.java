@@ -1,14 +1,18 @@
 package com.fpbm.pack.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor  @Getter
+@Setter
 public class Examen {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +25,8 @@ public class Examen {
     private Salle examen_module;
     @ManyToOne(targetEntity=ProfesseurHasModule.class)
     private Salle examen_prof;
-    @OneToMany(targetEntity= ExamenHPrHMoHEt.class, mappedBy="examenHasProfesseur")
-    private Collection<ExamenHPrHMoHEt> examenHasProfesseur;
-    @OneToMany(targetEntity=Surveillant.class, mappedBy="surveillantCollectionExamen")
-    private Collection<Surveillant> surveillantCollectionExamen;
+    @OneToMany(targetEntity= ExamenHPrHMoHEt.class, mappedBy="examenHasProfesseur",fetch = FetchType.EAGER)
+    private Set<ExamenHPrHMoHEt> examenHasProfesseur;
+    @OneToMany(targetEntity=Surveillant.class, mappedBy="surveillantCollectionExamen",fetch = FetchType.EAGER)
+    private Set<Surveillant> surveillantCollectionExamen;
 }

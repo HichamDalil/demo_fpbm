@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -18,6 +19,6 @@ public class Type {
     private long id;
     @Column(name = "name")
     private String name;
-    @OneToMany(targetEntity = Filiere.class, mappedBy = "Type")
-    private Collection<Filiere> filiereCollectionType;
+    @OneToMany(targetEntity = Filiere.class, mappedBy = "Type",fetch = FetchType.EAGER)
+    private Set<Filiere> filiereCollectionType;
 }

@@ -8,32 +8,18 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 
 
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@AllArgsConstructor   @Getter @Setter
+
 public class Departement {
-    public Departement(long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
-    public long getId() {
-        return id;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setId(long id) {this.id = id; }
 
     @Autowired
     @Id
@@ -41,12 +27,12 @@ public class Departement {
     private long id;
     @Column(name = "name")
     private String name;
-    @OneToMany( targetEntity=Filiere.class, mappedBy="departement" )
+    @OneToMany( targetEntity=Filiere.class, mappedBy="departement" ,fetch = FetchType.EAGER)
     private List<Filiere> filireHasdepartement = new ArrayList<>();
 
-    @OneToMany(targetEntity=Module.class, mappedBy="dep")
-    private Collection<Module> departementHasModuleCollection;
+    @OneToMany(targetEntity=Module.class, mappedBy="dep",fetch = FetchType.EAGER)
+    private Set<Module> departementHasModuleCollection;
 
-    @OneToMany(targetEntity=Professeur.class, mappedBy="dep")
-    private Collection<Professeur> departementHasProfesseurCollection;
+    @OneToMany(targetEntity=Professeur.class, mappedBy="dep",fetch = FetchType.EAGER)
+    private Set<Professeur> departementHasProfesseurCollection;
 }
