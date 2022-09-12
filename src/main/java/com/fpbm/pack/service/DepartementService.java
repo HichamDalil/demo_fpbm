@@ -12,11 +12,7 @@ public interface DepartementService {
     public  Departement save(Departement departement);
     public List<Departement> getAll();
     public Departement getOne(Long id) ;
-
-
     public Departement update(Departement dep, Long id) ;
-
-
     public void delete(Long id) ;
 
 }

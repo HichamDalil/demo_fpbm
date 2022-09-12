@@ -1,7 +1,9 @@
 package com.fpbm.pack.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -11,7 +13,7 @@ import java.util.Date;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor @Getter @Setter
 public abstract class Personne extends User{
 
     private String cin;

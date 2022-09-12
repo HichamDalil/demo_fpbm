@@ -1,10 +1,9 @@
 package com.fpbm.pack;
 
 import com.fpbm.pack.emploi_du_temps.Emploi_line;
-import com.fpbm.pack.entities.Filiere;
+import com.fpbm.pack.emploi_du_temps.Emploidutemps;
+import com.fpbm.pack.entities.*;
 import com.fpbm.pack.entities.Module;
-import com.fpbm.pack.entities.Professeur;
-import com.fpbm.pack.entities.Semester;
 import com.fpbm.pack.serviceimpl.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -35,10 +34,12 @@ public class MainApplication {
     Random rand = new Random();
     Module module_selected=new Module();
     ArrayList<Emploi_line> list_emp_line=new ArrayList<Emploi_line>();
+    ArrayList<Salle> list_salle=new ArrayList<Salle>();
+    Emploidutemps empdt=new Emploidutemps();
 
     @Bean
     CommandLineRunner commandLineRunner(SalleServiceImpl salleService, DepartementServiceImpl depser, FiliereServiceImpl filiereService
-    , SemesterServiceImpl semesterService, ModuleServiceImpl moduleService,ProfesseurServiceImpl professeurService){
+    , SemesterServiceImpl semesterService, ModuleServiceImpl moduleService, ProfesseurServiceImpl professeurService){
         return args -> {
 
             System.out.println("******************* RunningCommandLineRunner ***************");
@@ -104,6 +105,7 @@ public class MainApplication {
 
 
                     }
+                    Tab_module= new String[]{"M1", "M2", "M3", "M4", "M5", "M6", "M7"};
                 }
             }//la fin de remplissage de la liste des emploi_line
 
@@ -115,6 +117,12 @@ public class MainApplication {
             {
                 System.out.println(e.toString()+"**");
             }
+            /*
+            System.out.println("**********************en utilisant la class emploidutemps *********************************");
+            for (Emploi_line e:empdt.all_emp_line())
+            {
+                System.out.println(e.toString()+"**emploi du temps implement****");
+            }*/
 
         };
     }

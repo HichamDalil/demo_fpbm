@@ -42,4 +42,7 @@ public class Professeur extends Personne{
     @ManyToOne(targetEntity = Departement.class)
     private Departement dep;
 
+    public String getFullName() {
+        return super.getNom()+super.getPrenom();
+    }
 }
