@@ -15,9 +15,9 @@ import java.util.Set;
 @AllArgsConstructor
 public class PHDStudent extends Etudiant{
     @OneToMany(targetEntity = Inscription.class, mappedBy = "student_idPHDstudent",fetch = FetchType.EAGER)
-    private Set<Inscription> student_idPHDstudent;
-    @OneToMany(targetEntity = Soutenance.class, mappedBy = "soutenance_idPHDstudent",fetch = FetchType.EAGER)
-    private Set<Soutenance> soutenance_idPHDstudent;
+    private Set<Inscription> inscription;
+    @OneToMany(targetEntity = Soutenance.class, mappedBy = "PHDstudent",fetch = FetchType.EAGER)
+    private Set<Soutenance> soutenance;
     @ManyToOne(targetEntity = CED.class)
-    private CED ced_idphdstudent;
+    private CED ced;
 }

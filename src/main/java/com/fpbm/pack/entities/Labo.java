@@ -16,5 +16,5 @@ public class Labo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne( targetEntity=CED.class)
-    private CED ced_idced;
+    private CED ced;
 }

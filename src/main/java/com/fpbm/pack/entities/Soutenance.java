@@ -31,5 +31,5 @@ public class Soutenance {
     @ManyToOne(targetEntity = Salle.class)
     private Salle soutenance_idsoutenance;
     @ManyToOne(targetEntity = PHDStudent.class)
-    private PHDStudent soutenance_idPHDstudent ;
+    private PHDStudent PHDstudent ;
 }

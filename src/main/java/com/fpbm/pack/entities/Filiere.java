@@ -36,7 +36,7 @@ public class Filiere {
     private Set<Semester> semester;
 
 
-    @OneToMany( targetEntity=Etudiant.class, mappedBy="etudiantCollectionFiliere" ,fetch = FetchType.EAGER)
+    @OneToMany( targetEntity=Etudiant.class, mappedBy="filiere" ,fetch = FetchType.EAGER)
     private Set<Etudiant> etudiantCollectionFiliere;
 
 
