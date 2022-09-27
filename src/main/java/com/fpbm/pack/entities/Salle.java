@@ -1,9 +1,6 @@
 package com.fpbm.pack.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -22,6 +19,9 @@ public class Salle {
     private long capaciteEtudiant;
     @Column(name = "nombreSurveillant")
     private long nombreSurveillant;
+    @Column(name = "type_salle")
+    private String type_salle;
+
 
     @OneToMany( targetEntity=Soutenance.class, mappedBy="soutenance_idsoutenance" ,fetch = FetchType.EAGER)
     private Set<Soutenance> soutenance_idsoutenance;

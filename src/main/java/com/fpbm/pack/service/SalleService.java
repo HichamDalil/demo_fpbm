@@ -2,6 +2,8 @@ package com.fpbm.pack.service;
 
 import com.fpbm.pack.entities.Salle;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -11,7 +13,7 @@ public interface SalleService {
     public Salle save(Salle salle) ;
 
 
-    public List<Salle> getAll() ;
+    public ArrayList<Salle> getAll() ;
     public Salle getByname(String name) ;
 
 
@@ -22,5 +24,9 @@ public interface SalleService {
 
 
     public void delete(Long id) ;
+
+    public List<Salle> findByType_salle(String type_salle);
+
+    /*    public List<Salle> findBycapacite(long cp);*/
 }
 

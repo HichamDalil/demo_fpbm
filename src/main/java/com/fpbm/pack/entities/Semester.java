@@ -1,23 +1,19 @@
 package com.fpbm.pack.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Collection;
 import java.util.Set;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor @Setter @Getter
-public class Semester implements Serializable {
-    private static final long serialVersionUID = 6906240922716646312L;
+public class Semester{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "semester_id_in_filiere")
+    private int semester_id_in_filiere;
     @Column(name = "name_semester")
     private String name_semester;
     //modification : on a ajouté une colone qui contient le nb des inscrits ;
@@ -27,6 +23,9 @@ public class Semester implements Serializable {
     private Set<Module> moduleCollectionSemester;
     @ManyToOne(targetEntity=Filiere.class)
     private Filiere filiere;
+
+    @OneToMany(targetEntity = Section.class, mappedBy = "semester",fetch = FetchType.EAGER)
+    private Set<Section> sections;
     public void setNb_etudiant(long nb_etudiant) {
         this.nb_etudiant = nb_etudiant;
     }

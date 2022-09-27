@@ -26,7 +26,7 @@ public class Emploidutemps {
     private static int A,J,P,M,M_tab,D, Prof_index,nb_AJP=30,Module_reste,count=0;
     Random rand = new Random();
     Module module_selected=new Module();
-    ArrayList<Emploi_line> list_emp_line=new ArrayList<Emploi_line>();
+    ArrayList<Emploi_tuple> list_emp_line=new ArrayList<Emploi_tuple>();
     SalleServiceImpl salleService;
     DepartementServiceImpl depser;
     @Autowired
@@ -38,7 +38,7 @@ public class Emploidutemps {
     @Autowired
     ProfesseurServiceImpl professeurService=new ProfesseurServiceImpl();
 
-    public  ArrayList<Emploi_line> all_emp_line(){
+    public  ArrayList<Emploi_tuple> all_emp_line(){
         List<Filiere> listFiliere=new ArrayList<Filiere>();
         listFiliere=filiereService.getAll();
 
@@ -87,13 +87,13 @@ public class Emploidutemps {
                     //**********************
                     Tab_module[M_tab]="occupe";
                     //***insertion dans emploi_line****************
-                    Emploi_line emp=new Emploi_line();
+                    Emploi_tuple emp=new Emploi_tuple();
                     emp.setFiliere(f);
                     emp.setSemestre(s);
                     emp.setModule(module_selected);
                     emp.setProf(professeur);
                     emp.setJour(jour[J]);
-                    emp.setLocal(amphie[A]);
+                    //emp.setLocal(amphie[A]);
                     emp.setPeriode(periode[P]);
                     list_emp_line.add(emp);System.out.println("ajouter emp_line");
                     listModule.remove(M);System.out.println("supprimer module");//.....avant supprimer le module

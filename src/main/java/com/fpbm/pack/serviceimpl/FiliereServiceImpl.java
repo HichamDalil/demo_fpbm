@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
+import java.util.ArrayList;
 import java.util.List;
 @Component
 
@@ -14,7 +15,7 @@ public class FiliereServiceImpl implements FiliereService {
  @Autowired
    private FiliereRepository Repo;
     @Override
-    public List<Filiere> getAll() {return Repo.findAll();}
+    public ArrayList<Filiere> getAll() {return (ArrayList)Repo.findAll();}
     @Override
     public Filiere save(Filiere fil) {return Repo.save(fil);};
     @Override

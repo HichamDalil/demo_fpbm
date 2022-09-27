@@ -20,9 +20,7 @@ public class SemesterServiceImpl implements SemesterService {
         return Repo.save(s);
     }
     @Override
-    public List<Semester> getAll() {
-        return Repo.findAll();
-    }
+    public ArrayList<Semester> getAll() {return (ArrayList<Semester>)Repo.findAll();}
     @Override
     public Semester getOne(Long id) {
         return Repo.findById(id).get();

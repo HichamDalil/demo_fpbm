@@ -6,6 +6,7 @@ import com.fpbm.pack.service.SalleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 @Component
 public class SalleServiceImpl implements SalleService {
@@ -17,9 +18,7 @@ public class SalleServiceImpl implements SalleService {
         return salleRepository.save(salle);
     }
     @Override
-    public List<Salle> getAll() {
-        return salleRepository.findAll();
-    }
+    public ArrayList<Salle> getAll() {return (ArrayList<Salle>)salleRepository.findAll();}
     @Override
     public Salle getByname(String name) {
         return salleRepository.findByName(name);
@@ -35,6 +34,12 @@ public class SalleServiceImpl implements SalleService {
     public void delete(Long id) {
         salleRepository.deleteById(id);
     }
+
+    @Override
+    public ArrayList<Salle> findByType_salle(String type_salle){return (ArrayList<Salle>)salleRepository.findByType_salle(type_salle);}
+/*
+    @Override
+    public  List<Salle> findBycapacite(long cp){return salleRepository.findBycapacite(cp);}*/
 
 
 }

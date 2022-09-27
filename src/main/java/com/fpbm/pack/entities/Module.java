@@ -22,6 +22,14 @@ public class Module {
     private String Module_name;
     @Column(name = "groupe")
     private String groupe;
+    //***********************************************************
+    @Column(name = "has_td_tp")
+    private String has_td_tp="td";
+    @Column(name = "td_type")
+    private String td_type="en_salle";
+    @Column(name = "tp_type")
+    private String tp_type;
+
 
     @OneToMany(targetEntity=ProfesseurHasModule.class, mappedBy="professeurHasModuleCollection",fetch = FetchType.EAGER)
     private Set<ProfesseurHasModule> professeurHasModuleCollection;

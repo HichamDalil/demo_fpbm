@@ -12,7 +12,7 @@ public interface SemesterService {
 
 
     public  Semester save(Semester s);
-    public List<Semester> getAll();
+    public ArrayList<Semester> getAll();
     public Semester getOne(Long id) ;
     public Semester update(Semester s, Long id) ;
     public void delete(Long id) ;
