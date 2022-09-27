@@ -12,12 +12,11 @@ import java.util.List;
 @Repository
 public interface SalleRepository extends JpaRepository<Salle, Long> {
     Salle findByName(String name) ;
-    @Query("select s from Salle s where s.type_salle =?1")
-   List<Salle> findByType_salle(String type_salle);
+   // @Query("select s from Salle s where s.type_salle =?1")
+   List<Salle> findByTypesalle(String typesalle);
 
-    @Query("select s from Salle s where s.capaciteEtudiant =?1")
+    @Query("select s from Salle s where s.capaciteEtudiant >=?1")
     List<Salle> findBycapacite(long cp);
 
-
-
+    List<Salle> findBycapaciteEtudiantBetween(long val1,long val2);
 }

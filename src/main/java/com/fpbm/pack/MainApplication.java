@@ -1,7 +1,6 @@
 package com.fpbm.pack;
 
 import com.fpbm.pack.emploi_du_temps.Emploi_tuple;
-import com.fpbm.pack.emploi_du_temps.Emploidutemps;
 import com.fpbm.pack.entities.*;
 import com.fpbm.pack.entities.Module;
 import com.fpbm.pack.serviceimpl.*;
@@ -29,9 +28,10 @@ public class MainApplication {
     protected static String[][][] Tab_prof_jour_periode=new String[100][6][4] ;
 
     protected static String[][][] Tab_salle_jour_periode =new String[80][6][4] ;
-    protected static String[][][][][][][][] Emp=new String[4][1][4][7][7][6][4][100] ;
-    private static int A,J,P,M,M_tab, Prof_index,nb_AJP=40,initial_charge_horaire=12;
-    private static int[]Prof_charge_horaire=new int[100];
+    //protected static String[][][][][][][][] Emp=new String[4][1][4][7][7][6][4][100] ;
+    private static int A,J,P,M,M_tab, Prof_index,nb_AJP=40,duree_seance=2,initial_charge_horaire=12;
+    private static int[]Tab_Prof_charge_hor_affecte=new int[100];
+    private static int[] Tab_Prof_charge_hor_disponible =new int[100];
 
     Random rand = new Random();
     Module module_selected=new Module();
@@ -46,7 +46,17 @@ public class MainApplication {
         return args -> {
             System.gc();
             System.out.println("******************* RunningCommandLineRunner ***************");
+            //**************************************************************************************
+            ArrayList<Professeur> all_prof=(ArrayList<Professeur>) professeurService.getAll();
 
+            for (Professeur p:all_prof)
+            {
+                if((Object)p.getCharge_hor_disponible()!=null)
+                    {Tab_Prof_charge_hor_disponible[(int) p.getId()]=p.getCharge_hor_disponible();}
+                else Tab_Prof_charge_hor_disponible[(int) p.getId()]=0;
+            }
+
+            //**************************************************************************************
             ArrayList<Filiere> listfiliere=filiereService.getAll();
 
             for (Filiere f: listfiliere)
@@ -73,7 +83,7 @@ public class MainApplication {
 
 
                         // ici on va telecharger les amphie puisque il y a des sections **********************
-                        ArrayList<Salle> listSalle=salleService.findByType_salle("amphie");
+                        ArrayList<Salle> listSalle=salleService.findByTypesalle("amphie");
                         //ArrayList<Salle> listSalle=  salleService.getAll();
                         int id_salle_in_listSalle;
                         // ce tableau n'est pas static puisque chaque semester a des sections ****************
@@ -94,14 +104,20 @@ public class MainApplication {
                                 M_tab=rand.nextInt(nb_module);System.out.println("choix du module  M_tab=rand.nextInt(nb_module):M="+M);
                                 while (Tab_module[M_tab]=="occupe")
                                 {M_tab=rand.nextInt(nb_module);System.out.println("dans la boucle while (Tab_module[M_tab]==\"occupe\") M="+M);}
-                                //----------------
+                                //-------------------------------------------------
                                 M=rand.nextInt(listModule.size());
                                 module_selected=listModule.get(M);
-                                //choix du professeur*****************
+                                //***choix du professeur******************************************************
                                 List <Professeur> listprof=professeurService.findByDep(module_selected.getDep()) ;System.out.println("listprof=findByDep(module_selected.getDep())");
                                 Prof_index =rand.nextInt(listprof.size());System.out.println("Prof_index =rand.nextInt(listprof.size())  Prof_index="+Prof_index);
                                 Professeur professeur=listprof.get(Prof_index);
-                                //*********************************
+                                //verifier si le professeur est disponible--------------------------------------------
+                                while(Tab_Prof_charge_hor_disponible[(int)professeur.getId()]==0)
+                                {
+                                    Prof_index =rand.nextInt(listprof.size());System.out.println("verifier si le professeur est disponible depuis liste sections Prof_index= "+Prof_index);
+                                    professeur=listprof.get(Prof_index);
+                                }
+                                //******************************************************************************
                                 A=rand.nextInt(listSalle.size());id_salle_in_listSalle=A;
                                 A=(int)listSalle.get(A).getId();
                                 J=rand.nextInt(jour.length);
@@ -117,15 +133,16 @@ public class MainApplication {
                                     J=rand.nextInt(jour.length);P=rand.nextInt(periode.length);
                                     System.out.println("dans la boucle while (Tab_amphie_jour_periode || Tab_section_jour_per ||Tab_prof_jour_periode ==\"occupe\" A="+A+" P="+P+" J="+J);
                                 }
-                                //----aprés sortir de la boucle---------
-
+                                //--------------------------------------
+                                Tab_Prof_charge_hor_disponible[(int)professeur.getId()]-=duree_seance;
                                 //--------------------------------------
                                 Tab_salle_jour_periode[A][J][P]="occupe";
                                 Tab_section_jour_per[((int) section.getSection_id_in_semester())][J][P]="occupe";
                                 Tab_prof_jour_periode[Prof_index][J][P]="occupe";
-                                //**********************
+
+                                //***********************************************
                                 Tab_module[M_tab]="occupe";
-                                //***insertion dans emploi_line****************
+                                //***insertion dans emploi_tuples****************
                                 Emploi_tuple emp=new Emploi_tuple();
                                 emp.setFiliere(f);
                                 emp.setSemestre(s);
@@ -154,9 +171,16 @@ public class MainApplication {
                     ArrayList<Module> listModule=new ArrayList<>();
                     if(listModule.isEmpty()) listModule= moduleService.findBysemester(s);
                     int nb_module=listModule.size();
-                   // int nb_etudiant= (int) s.getNb_etudiant();
-                    //ArrayList<Salle> listSalle=(ArrayList<Salle>)salleService.findByType_salle("salle");
-                    ArrayList<Salle> listSalle=  salleService.getAll();
+                    //****choix des salles **********************************************************************************
+                    int nb_etudiant= (int) s.getNb_etudiant();
+                    ArrayList<Salle> listSalle=(ArrayList<Salle>)salleService.findBycapaciteEtudiantBetween(nb_etudiant,nb_etudiant+10);
+                    int nb_test=1;
+                    while (listSalle.isEmpty() &&nb_test<8)
+                    {
+                        nb_test++;listSalle=(ArrayList<Salle>)salleService.findBycapaciteEtudiantBetween(nb_etudiant,nb_etudiant+10*nb_test);
+                    }
+                    //***-----------------**----------------**-------------**-----------------------------------------------------------
+                    //ArrayList<Salle> listSalle=  salleService.getAll();
                     int id_salle_in_listSalle;
                     while (!listModule.isEmpty())
                     {
@@ -168,11 +192,17 @@ public class MainApplication {
                         //----------------
                         M=rand.nextInt(listModule.size());
                         module_selected=listModule.get(M);
-                        //choix du professeur*****************
+                        //choix du professeur****************************************************
                         List <Professeur> listprof=professeurService.findByDep(module_selected.getDep()) ;System.out.println("listprof=findByDep(module_selected.getDep())");
                         Prof_index =rand.nextInt(listprof.size());System.out.println("Prof_index =rand.nextInt(listprof.size())  Prof_index="+Prof_index);
                         Professeur professeur=listprof.get(Prof_index);
-                        //*********************************
+                        //verifier si le professeur est disponible--------------------------------------------
+                        while(Tab_Prof_charge_hor_disponible[(int)professeur.getId()]==0)
+                        {
+                            Prof_index =rand.nextInt(listprof.size());System.out.println("verifier si le professeur est disponible depuis liste semester= "+s.getName_semester()+" Prof_index= "+professeur.getId());
+                            professeur=listprof.get(Prof_index);
+                        }
+                        //***************************************************************
                         A=rand.nextInt(listSalle.size());id_salle_in_listSalle=A;
                         A=(int)listSalle.get(A).getId();
                         J=rand.nextInt(jour.length);P=rand.nextInt(periode.length);
@@ -189,8 +219,8 @@ public class MainApplication {
                             professeur=listprof.get(Prof_index);
                             System.out.println("dans la boucle while (Tab_amphie_jour_periode || Tab_semester_jour_per ||Tab_prof_jour_periode ==\"occupe\" A="+A+" P="+P+" J="+J);
                         }
-                        //----aprés sortir de la boucle---------
-
+                        //--------------------------------------
+                        Tab_Prof_charge_hor_disponible[(int)professeur.getId()]-=duree_seance;
                         //--------------------------------------
                         Tab_salle_jour_periode[A][J][P]="occupe";
                         Tab_semester_jour_per[((int) s.getSemester_id_in_filiere())][J][P]="occupe";

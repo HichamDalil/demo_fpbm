@@ -36,7 +36,10 @@ public class SalleServiceImpl implements SalleService {
     }
 
     @Override
-    public ArrayList<Salle> findByType_salle(String type_salle){return (ArrayList<Salle>)salleRepository.findByType_salle(type_salle);}
+    public ArrayList<Salle> findByTypesalle(String typesalle){return (ArrayList<Salle>)salleRepository.findByTypesalle(typesalle);}
+
+    @Override
+    public List<Salle> findBycapaciteEtudiantBetween(int val1,int val2){return salleRepository.findBycapaciteEtudiantBetween(val1,val2);};
 /*
     @Override
     public  List<Salle> findBycapacite(long cp){return salleRepository.findBycapacite(cp);}*/

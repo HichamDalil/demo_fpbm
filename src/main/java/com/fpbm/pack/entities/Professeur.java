@@ -21,7 +21,12 @@ public class Professeur extends Personne{
 
     @Column(name = "grade")
     private String grade;
-
+    //----------------------------------------------
+    @Column(name = "charge_hor_affecte")
+    private int charge_hor_affecte;
+    @Column(name = "charge_hor_disponible")
+    private int charge_hor_disponible;
+    //----------------------------------------------
     @OneToMany(targetEntity=Filiere.class, mappedBy="filiereCollectionProfesseur",fetch = FetchType.EAGER)
     private Set<Filiere> filiereCollectionProfesseur;
     @OneToMany(targetEntity=Jury.class, mappedBy="membrejury_idprofesseur",fetch = FetchType.EAGER)

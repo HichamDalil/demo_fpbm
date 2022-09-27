@@ -19,8 +19,8 @@ public class Salle {
     private long capaciteEtudiant;
     @Column(name = "nombreSurveillant")
     private long nombreSurveillant;
-    @Column(name = "type_salle")
-    private String type_salle;
+    @Column(name = "typesalle")
+    private String typesalle;
 
 
     @OneToMany( targetEntity=Soutenance.class, mappedBy="soutenance_idsoutenance" ,fetch = FetchType.EAGER)

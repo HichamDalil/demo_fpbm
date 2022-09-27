@@ -25,7 +25,8 @@ public interface SalleService {
 
     public void delete(Long id) ;
 
-    public List<Salle> findByType_salle(String type_salle);
+    public List<Salle> findByTypesalle(String typesalle);
+    List<Salle> findBycapaciteEtudiantBetween(int val1,int val2);
 
     /*    public List<Salle> findBycapacite(long cp);*/
 }
