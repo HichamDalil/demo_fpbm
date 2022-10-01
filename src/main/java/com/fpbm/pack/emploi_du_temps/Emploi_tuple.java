@@ -27,7 +27,7 @@ public class Emploi_tuple {
         String section_name="";
         if(section!=null){section_name=section.getSection_name();}
 
-        return "Emploi_line{" +
+        return "Emploi_tuple{" +
                 "filiere=" + filiere.getName() +
                 ", semestre=" + semestre.getName_semester() +" "+
                 section_name+
