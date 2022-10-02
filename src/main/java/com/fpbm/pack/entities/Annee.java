@@ -18,6 +18,6 @@ public class Annee {
     private long id;
     @Column(name = "annee")
     private String annee;
-    @OneToMany( targetEntity=ProfesseurHasModule.class, mappedBy="professeurHasModuleCollectionAnnee" ,fetch = FetchType.EAGER)
+    @OneToMany( targetEntity=ProfesseurHasModule.class, mappedBy="Annee" ,fetch = FetchType.EAGER)
     private Set<ProfesseurHasModule> professeurHasModuleCollectionAnnee;
 }

@@ -23,6 +23,6 @@ public class Courstdtp {
     private long id;
     @Column(name = "name")
     private String name;
-    @OneToMany( targetEntity=ProfesseurHasModule.class, mappedBy="professeurHasModuleCollectionCoursTDTP" ,fetch = FetchType.EAGER)
+    @OneToMany( targetEntity=ProfesseurHasModule.class, mappedBy="CoursTDTP" ,fetch = FetchType.EAGER)
     private Set<ProfesseurHasModule> professeurHasModuleCollectionCoursTDTP;
 }

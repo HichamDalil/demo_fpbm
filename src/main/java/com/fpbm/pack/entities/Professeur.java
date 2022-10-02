@@ -34,7 +34,7 @@ public class Professeur extends Personne{
 
     @ManyToOne(targetEntity = LieuDeTravail.class)
     private LieuDeTravail LieuDeTravail;
-    @OneToMany(targetEntity=ProfesseurHasModule.class, mappedBy="prof_module",fetch = FetchType.EAGER)
+    @OneToMany(targetEntity=ProfesseurHasModule.class, mappedBy="professeur",fetch = FetchType.EAGER)
     private Set<ProfesseurHasModule> prof_module;
 
     @ManyToOne(targetEntity = Extern.class)

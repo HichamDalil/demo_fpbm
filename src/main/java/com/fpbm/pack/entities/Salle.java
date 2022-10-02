@@ -3,7 +3,6 @@ package com.fpbm.pack.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Set;
 
 @Entity
@@ -28,5 +27,12 @@ public class Salle {
     @OneToMany( targetEntity=Examen.class, mappedBy="examen_module" ,fetch = FetchType.EAGER)
     private Set<Examen> examen_module;
 
+    @OneToMany( targetEntity=ProfesseurHasModule.class, mappedBy="salle" ,fetch = FetchType.EAGER)
+    private Set<Salle> prof_has_mod;
+
+
+    @ManyToOne
+    @JoinColumn(name = "salle_id")
+    private Salle salle;
 
 }

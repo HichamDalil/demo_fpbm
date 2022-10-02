@@ -18,7 +18,7 @@ public class Section  {
     private String section_name;
     @Column(name = "section_id_in_semester")
     private int section_id_in_semester;
-    @OneToMany(targetEntity = ProfesseurHasModule.class, mappedBy = "professeurHasModuleCollectionSection",fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = ProfesseurHasModule.class, mappedBy = "Section",fetch = FetchType.EAGER)
     private Set<ProfesseurHasModule> professeurHasModuleCollectionSection;
 
     //***********************************************************************

@@ -31,7 +31,7 @@ public class Module {
     private String tp_type;
 
 
-    @OneToMany(targetEntity=ProfesseurHasModule.class, mappedBy="professeurHasModuleCollection",fetch = FetchType.EAGER)
+    @OneToMany(targetEntity=ProfesseurHasModule.class, mappedBy="Module",fetch = FetchType.EAGER)
     private Set<ProfesseurHasModule> professeurHasModuleCollection;
     @ManyToOne(targetEntity=Semester.class)
     private Semester semester;

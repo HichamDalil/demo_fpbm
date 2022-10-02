@@ -15,17 +15,21 @@ public class ProfesseurHasModule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne(targetEntity=Annee.class)
-    private Annee professeurHasModuleCollectionAnnee;
+    private Annee Annee;
     @ManyToOne(targetEntity=Courstdtp.class)
-    private Courstdtp professeurHasModuleCollectionCoursTDTP;
+    private Courstdtp CoursTDTP;
     @ManyToOne(targetEntity=Section.class)
-    private Section professeurHasModuleCollectionSection;
+    private Section Section;
     @OneToMany( targetEntity=Examen.class, mappedBy="examen_prof" ,fetch = FetchType.EAGER)
     private Set<Examen> examen_prof;
     @ManyToOne(targetEntity=Professeur.class)
-    private Professeur prof_module;
+    private Professeur professeur;
     @ManyToOne(targetEntity= Module.class)
-    private Module professeurHasModuleCollection;
+    private Module Module;
+
+    @ManyToOne(targetEntity= Salle.class)
+    private Salle salle;
+
     @OneToMany(targetEntity= ProfesseurHMoHEt.class, mappedBy="professeurHasModule",fetch = FetchType.EAGER)
     private Set<ProfesseurHMoHEt> professeurHasModule;
 }
