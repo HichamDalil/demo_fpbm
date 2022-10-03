@@ -22,15 +22,15 @@
                 <table class="table table-bordered" border="3" align = "center" style="width: 100%">
                     <thead class="thead-dark" align = "center">
                     <tr><th th:text="${list.information}" colspan="5" align = "center"></th></tr>
-                    <tr><th>Jour</th><th>08h30 - 11h</th><th>11h10- 13h40</th><th>13h50 - 16h20</th><th>16h30 - 17h</th>                    </tr>
+                    <tr><th style="width: 8%">Jour</th><th style="width: 23%">08h30 - 11h</th><th style="width: 23%">11h10- 13h40</th><th style="width: 23%">13h50 - 16h20</th><th style="width: 23%">16h30 - 17h</th>                    </tr>
                     </thead>
                     <tbody >
                     <tr th:each="e : ${list.list_eto}" align = "center" >
-                        <td th:text="${e.jour}" align = "center">jour</td>
-                        <td th:text="${e.p1}" align = "center"></td>
-                        <td th:text="${e.p2}" align = "center"></td>
-                        <td th:text="${e.p3}" align = "center"></td>
-                        <td th:text="${e.p4}" align = "center"></td>
+                        <td th:text="${e.jour}" align = "center"  style="width: 8%">jour</td>
+                        <td th:text="${e.p1}" align = "center" style="width: 23%"></td>
+                        <td th:text="${e.p2}" align = "center" style="width: 23%"></td>
+                        <td th:text="${e.p3}" align = "center" style="width: 23%"></td>
+                        <td th:text="${e.p4}" align = "center" style="width: 23%"></td>
                     </tr>
 
                     </tbody>
@@ -44,8 +44,8 @@
 
 </div>
 <tr>
-    <div align = "left" >
-        <a th:href="@{'/saveemploi'}" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;sauvgarger les emplois</a>
+    <div align = "center" >
+        <a th:href="@{'/emploi_saved'}" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;sauvgarger les emplois</a>
     </div>
 </tr>
 </body>

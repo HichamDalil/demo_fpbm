@@ -1,7 +1,9 @@
 package com.fpbm.pack.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -9,7 +11,8 @@ import java.util.Set;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor @Setter
+@Getter
 public class ProfesseurHasModule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,4 +35,10 @@ public class ProfesseurHasModule {
 
     @OneToMany(targetEntity= ProfesseurHMoHEt.class, mappedBy="professeurHasModule",fetch = FetchType.EAGER)
     private Set<ProfesseurHMoHEt> professeurHasModule;
+
+    //************  jour  et  periode  **********************************
+    @ManyToOne( targetEntity=Jour.class)
+    private Jour jour;
+    @ManyToOne( targetEntity=Periode.class)
+    private Periode periode;
 }

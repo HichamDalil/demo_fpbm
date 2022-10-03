@@ -38,10 +38,13 @@ public class SalleController {
     private ModuleServiceImpl moduleService;
     @Autowired
     private ProfesseurServiceImpl professeurService;
+    @Autowired
+    private ProfesseurHasModuleServiceImpl professeurHasModuleService;
 
     private ArrayList<ArrayList<Emploi_tuple>> groupes_emp_tuples =new ArrayList<ArrayList<Emploi_tuple>>();
     private String[] periode= {"1","2","3","4"};
     private String[] jour= {"lundi","mardi","mercredi","jeudi","vendredi","samedi"};
+    private ArrayList<Groupe_Emploi_tuple_org> list_Groupe_Emploi_tuples_org =new ArrayList<Groupe_Emploi_tuple_org>();
     private int[] Tab_Prof_charge_hor_disponible =new int[100];
 
 
@@ -127,10 +130,10 @@ public class SalleController {
    }
    //******************************************************************************************
    @GetMapping("/emploi")
-   public ModelAndView viewemploiPage(Model model) {
+   public ModelAndView viewemploiPage() {
        ModelAndView mav = new ModelAndView("emploi");
 
-       //private static String[] amphie= {"A","B","C","D"};
+       list_Groupe_Emploi_tuples_org.clear();
 
         String[] Tab_module= {"M1","M2","M3","M4","M5","M6","M7"};
         String[][][] Tab_prof_jour_periode=new String[100][6][4] ;
@@ -145,7 +148,7 @@ public class SalleController {
 
 
        ArrayList<String[][]> groupes_mat_jour_periode =new ArrayList<String[][]>();
-       ArrayList<Groupe_Emploi_tuple_org> list_Groupe_Emploi_tuples_org =new ArrayList<Groupe_Emploi_tuple_org>();
+
        List<Salle> listsalle = salleService.getAll();
        System.out.print("Get /emploi ");
        //System.gc();
@@ -496,52 +499,42 @@ public class SalleController {
 
        System.out.println("list_emp_tuples ************************************************************************");
        System.out.println();
-       //System.out.println("groupes_emp_tuples.isEmpty()= "+groupes_emp_tuples.isEmpty());
+
        for (ArrayList< Emploi_tuple> g: groupes_emp_tuples)
        {
-           //System.out.println("g.isEmpty()= "+g.isEmpty());
            for (Emploi_tuple e: g) {System.out.println(e.toString()+"****");}
-
        }
-       System.out.println("fin du fetching du groupes_emp_tuples");
+       System.out.println("fin d'affichage' du groupes_emp_tuples");
 
-       //**** sort Arraylist ------------********************************************************
+       //-------conversion vers des matrices------------------------------ ------------
        for (ArrayList< Emploi_tuple> g: groupes_emp_tuples)
        {
-           String[][] mat_jour_periode=new String[7][5];
-           for (Emploi_tuple e: g)
+           if(!g.isEmpty())
            {
-               //System.out.println(Arrays.asList(jour).indexOf(e.getJour()));
-               mat_jour_periode[Arrays.asList(jour).indexOf(e.getJour())][Arrays.asList(periode).indexOf(e.getPeriode())+1]
-                       =e.getModule().getModule_name()+" Pr:"+e.getProf().getFullName()+" locale:"+e.getSalle().getName();
-               mat_jour_periode[Arrays.asList(jour).indexOf(e.getJour())][0]=e.getJour();
-               mat_jour_periode[6][0]=e.getFiliere().getName()+"  "+e.getSemestre().getName_semester()+"  ";
-               if(e.getSection()!=null){mat_jour_periode[6][0]+=e.getSection().getSection_name();}
-           }
-           //pour ajouter les jours manquant : {--------------------------------
-           for (int i = 0; i < jour.length; i++)
-           {
-                if(mat_jour_periode[i][0]==null) {mat_jour_periode[i][0]=jour[i];}
-           }
-           //pour ajouter les jours manquant : }--------------------------------
+               String[][] mat_jour_periode=new String[7][5];
+               for (Emploi_tuple e: g)
+               {
+                   //System.out.println(Arrays.asList(jour).indexOf(e.getJour()));
+                   mat_jour_periode[Arrays.asList(jour).indexOf(e.getJour())][Arrays.asList(periode).indexOf(e.getPeriode())+1]
+                           =e.getModule().getModule_name()+" Pr:"+e.getProf().getFullName()+" locale:"+e.getSalle().getName();
+                   mat_jour_periode[Arrays.asList(jour).indexOf(e.getJour())][0]=e.getJour();
+                   mat_jour_periode[6][0]=e.getFiliere().getName()+"  "+e.getSemestre().getName_semester()+"  ";
+                   if(e.getSection()!=null){mat_jour_periode[6][0]+=e.getSection().getSection_name();}
+               }
+               //pour ajouter les jours manquant : {--------------------------------
+               for (int i = 0; i < jour.length; i++)
+               {
+                   if(mat_jour_periode[i][0]==null) {mat_jour_periode[i][0]=jour[i];}
+               }
+               //pour ajouter les jours manquant : }--------------------------------
 
-           groupes_mat_jour_periode.add(mat_jour_periode);
+               groupes_mat_jour_periode.add(mat_jour_periode);
+           }
+
        }
-       System.out.println("fin du sort du groupes_emp_tuples");
+       //-----fin du conversion vers des matrices--------------------------------------
 
-       //******affichage d'emploi -------------------------------------------------------------------------
-            /*for (String[][] m:groupes_mat_jour_periode)
-            {
-                for (int i=1;i<m.length;i++)
-                {
-                    for (int j=1;j<m[i].length;j++)
-                    {
-                        System.out.print(m[i][j]+"    ");
-                    }
-                    System.out.println("");
-                }
-            }*/
-       //****** from matrice vers Emploi_tuple_org********************************
+       //------- tri des groupes_emp_tuples à l'aide des matrices------------------------------
        for (String[][] m:groupes_mat_jour_periode)
        {
            Groupe_Emploi_tuple_org groupe_EMPO=new Groupe_Emploi_tuple_org();
@@ -562,6 +555,9 @@ public class SalleController {
            groupe_EMPO.setInformation(m[6][0]);
            list_Groupe_Emploi_tuples_org.add(groupe_EMPO);
        }
+       //----fin tri des groupes_emp_tuples à l'aide des matrices--------------------------------
+
+       //---affichage des tuples organiser-------------------------------
        System.out.println("affichage des tuples organiser");
        for (Groupe_Emploi_tuple_org emp:list_Groupe_Emploi_tuples_org)
        {
@@ -572,17 +568,22 @@ public class SalleController {
            }
            System.out.println("      ");
        }
+       //---fin d'affichage des tuples organiser-------------------------------
 
-
+       mav.clear();
+       System.out.println(mav.isEmpty());
        mav.addObject("list_Groupe_eto", list_Groupe_Emploi_tuples_org);
+
 
        return mav;
    }
 
 //********************************************************************************************/
-    @GetMapping("/saveemploi")
-    public ModelAndView saveemploiPage(Model model){
+
+    @GetMapping("/emploi_saved")
+    public ModelAndView saveemploiPage(){
         ModelAndView mav = new ModelAndView("emploi_saved");
+        mav.clear();
         mav.addObject("groupes_emp_tuples", groupes_emp_tuples);
         //----enregitrer l'emploi ------------------------
         for (ArrayList< Emploi_tuple> g: groupes_emp_tuples)
@@ -590,10 +591,33 @@ public class SalleController {
 
             for (Emploi_tuple e: g)
             {
+                ProfesseurHasModule professeurHasModule=new ProfesseurHasModule();
+                professeurHasModule.setModule(e.getModule());
+                professeurHasModule.setProfesseur(e.getProf());
+                professeurHasModule.setSalle(e.getSalle());
+                if (e.getSection() != null) {professeurHasModule.setSection(e.getSection());}
+                Jour j=new Jour();int indice_jour=Arrays.asList(jour).indexOf(e.getJour());
+                j.setId(indice_jour+1);j.setJour(jour[indice_jour]);
+                professeurHasModule.setJour(j);
+                Periode p=new Periode();
+                p.setId(Arrays.asList(periode).indexOf(e.getPeriode())+1);p.setPeriode("p1");
+                professeurHasModule.setPeriode(p);
+                Annee annee=new Annee(); annee.setId(2);annee.setAnnee("2022");
+                professeurHasModule.setAnnee(annee);
+                Courstdtp courstdtp=new Courstdtp();courstdtp.setId(1);courstdtp.setName("Cours");
+                professeurHasModule.setCoursTDTP(courstdtp);
+                professeurHasModuleService.save(professeurHasModule);
 
             }
         }
         //----enregitrer l'emploi ------------------------
         return mav;
+    }
+//********************************************************************************************/
+
+    public ModelAndView getallemploiPage()
+    {
+
+        return null;
     }
 }

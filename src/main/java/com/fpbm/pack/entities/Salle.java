@@ -28,11 +28,9 @@ public class Salle {
     private Set<Examen> examen_module;
 
     @OneToMany( targetEntity=ProfesseurHasModule.class, mappedBy="salle" ,fetch = FetchType.EAGER)
-    private Set<Salle> prof_has_mod;
+    private Set<ProfesseurHasModule> prof_has_mod;
 
 
-    @ManyToOne
-    @JoinColumn(name = "salle_id")
-    private Salle salle;
+
 
 }
