@@ -26,6 +26,8 @@ public class Semester{
 
     @OneToMany(targetEntity = Section.class, mappedBy = "semester",fetch = FetchType.EAGER)
     private Set<Section> sections;
+    @OneToMany(targetEntity = ProfesseurHasModule.class, mappedBy = "semester",fetch = FetchType.EAGER)
+    private Set<ProfesseurHasModule> professeurHasModuleSet;
     public void setNb_etudiant(long nb_etudiant) {
         this.nb_etudiant = nb_etudiant;
     }

@@ -23,6 +23,9 @@ public class ProfesseurHasModule {
     private Courstdtp CoursTDTP;
     @ManyToOne(targetEntity=Section.class)
     private Section Section;
+    @ManyToOne(targetEntity=Semester.class)
+    private Semester semester;
+
     @OneToMany( targetEntity=Examen.class, mappedBy="examen_prof" ,fetch = FetchType.EAGER)
     private Set<Examen> examen_prof;
     @ManyToOne(targetEntity=Professeur.class)
