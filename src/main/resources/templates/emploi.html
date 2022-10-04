@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cosmo/bootstrap.min.css" />
+    <script src= "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
+</head>
+<body>
+<br> <br> <br>
+<!-- <tr>
+    <div align = "left" >
+        <a th:href="@{'/newDep'}" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Add new Departement</a>
+    </div>
+</tr> -->
+<div align = "center">
+    <tr align = "center">
+
+        <div  align = "center" style="width: 80%">
+            <div class="panel-body" align = "center" th:each="list : ${list_Groupe_eto }" >
+                <br><br><br>
+                <table class="table table-bordered" border="3" align = "center" style="width: 100%">
+                    <thead class="thead-dark" align = "center">
+                    <tr><th th:text="${list.information}" colspan="5" align = "center"></th></tr>
+                    <tr><th style="width: 8%">Jour</th><th style="width: 23%">08h30 - 11h</th><th style="width: 23%">11h10- 13h40</th><th style="width: 23%">13h50 - 16h20</th><th style="width: 23%">16h30 - 17h</th>                    </tr>
+                    </thead>
+                    <tbody >
+                    <tr th:each="e : ${list.list_eto}" align = "center" >
+                        <td th:text="${e.jour}" align = "center"  style="width: 8%">jour</td>
+                        <td th:text="${e.p1}" align = "center" style="width: 23%"></td>
+                        <td th:text="${e.p2}" align = "center" style="width: 23%"></td>
+                        <td th:text="${e.p3}" align = "center" style="width: 23%"></td>
+                        <td th:text="${e.p4}" align = "center" style="width: 23%"></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </tr>
+
+</div>
+<!--
+<tr>
+    <div align = "center" >
+        <a th:href="@{'/emploi_saved'}" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;sauvgarger les emplois</a>
+    </div>
+</tr> -->
+</body>
+</html>
