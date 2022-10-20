@@ -25,8 +25,9 @@ public class ProfesseurServiceImpl implements ProfesseurService {
     }
 
     @Override
-    public Professeur update(Professeur prof, long id) {
-        prof.setId(id);return Repo.save(prof);
+    public Professeur update(Professeur prof, long id,int charge_horaire,int charge_hor_affecte) {
+        prof.setId(id);prof.setCharge_hor_disponible(charge_horaire);prof.setCharge_hor_affecte(charge_hor_affecte);
+        return Repo.save(prof);
     }
 
     @Override
@@ -39,7 +40,16 @@ public class ProfesseurServiceImpl implements ProfesseurService {
         return Repo.findAll();
     }
     @Override
-    public ArrayList<Professeur> findByDep(Departement dep) { return Repo.findByDep(dep);};
+    public ArrayList<Professeur> findByDep(Departement dep) { return Repo.findByDep(dep);}
+
+    @Override
+    public void reinstaliser_charge_horaire_dispo() {
+        Repo.reinstaliser_charge_horaire_dispo();
+    }
+    @Override
+    public void reinstaliser_charge_horaire_affect() {
+         Repo.reinstaliser_charge_horaire_affect();
+    }
 
 
 

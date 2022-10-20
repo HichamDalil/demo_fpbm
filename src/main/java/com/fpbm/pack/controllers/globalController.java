@@ -43,16 +43,25 @@ public class globalController {
     private String[] jour= {"lundi","mardi","mercredi","jeudi","vendredi","samedi"};
     private ArrayList<Groupe_Emploi_tuple_org> list_Groupe_Emploi_tuples_org =new ArrayList<Groupe_Emploi_tuple_org>();
     private int[] Tab_Prof_charge_hor_disponible =new int[100];
+    private int initial_charge_horaire=12;
 
 
     @GetMapping("/")
     public String viewHomePage(Model model) {
-        List<Salle> listsalle = salleService.getAll();
-        model.addAttribute("listsalle", listsalle);
+
         System.out.print("Get / ");
         return "home";
     }
 
+    @GetMapping("/login")
+    public String loginPage(Model model) {
+
+        System.out.print("Get /login ");
+        //if admin return
+        return "login";
+        // if user return
+    }
+//*********************************************************************************************************
     @GetMapping("/homedep")
     public String viewHomePagedep(Model model) {
         List<Departement> departementList=dep_serv.getAll();
@@ -131,12 +140,14 @@ public class globalController {
        ModelAndView mav = new ModelAndView("new_emploi");
 
        list_Groupe_Emploi_tuples_org.clear();
+       professeurService.reinstaliser_charge_horaire_dispo();
+       professeurService.reinstaliser_charge_horaire_affect();
 
         String[] Tab_module= {"M1","M2","M3","M4","M5","M6","M7"};
         String[][][] Tab_prof_jour_periode=new String[100][6][4] ;
 
         String[][][] Tab_salle_jour_periode =new String[80][6][4] ;
-        int A,J,P,M=0,M_tab, Prof_index,nb_AJP=40,duree_seance=2,NSCJ=2,initial_charge_horaire=12;
+        int A,J,P,M=0,M_tab, Prof_index,nb_AJP=40,duree_seance=2,NSCJ=2;
         int[]Tab_Prof_charge_hor_affecte=new int[100];
 
 
@@ -307,9 +318,10 @@ public class globalController {
                            Tab_salle_jour_periode[A][J][P]="occupe";
                            Tab_section_jour_per[((int) section.getSection_id_in_semester())][J][P]="occupe";
                            Tab_prof_jour_periode[Prof_index][J][P]="occupe";
-
-                           //***********************************************
                            Tab_module[M_tab]="occupe";
+
+                           //********************************************************************************************
+
                            //***insertion dans emploi_tuples****************
                            Emploi_tuple emp=new Emploi_tuple();
                            emp.setFiliere(f);
@@ -490,7 +502,7 @@ public class globalController {
            {System.out.println(s.getName_semester());}
            -------------------------------------------------------*/
 
-       }//la fin de remplissage de la liste des emploi_line
+       }//la fin de remplissage de la liste des emploi_tuples
 
        //******affichage des emploi du temps
 
@@ -589,12 +601,15 @@ public class globalController {
 
 //********************************************************************************************/
 
-    @GetMapping("/emploi_saved")
-    public ModelAndView saveemploiPage(){
-        ModelAndView mav = new ModelAndView("emploi_saved");
-        mav.clear();
-        mav.addObject("groupes_emp_tuples", groupes_emp_tuples);
-        //----enregitrer l'emploi ------------------------
+    @GetMapping("/saveemploi")
+    public String saveemploiPage(){
+
+        professeurHasModuleService.deleteall();
+        professeurHasModuleService.auto_increment_to_one();
+        //--------------------------------------------------
+
+
+
         for (ArrayList< Emploi_tuple> g: groupes_emp_tuples)
         {
 
@@ -617,11 +632,15 @@ public class globalController {
                 professeurHasModule.setCoursTDTP(courstdtp);
                 professeurHasModule.setSemester(e.getSemestre());
                 professeurHasModuleService.save(professeurHasModule);
+                //affectation du charge horaire pour le prof
+                Professeur professeur=e.getProf();
+                int charge_hor_affecte=initial_charge_horaire-Tab_Prof_charge_hor_disponible[(int)professeur.getId()];
+                professeurService.update(professeur, professeur.getId(),Tab_Prof_charge_hor_disponible[(int)professeur.getId()],charge_hor_affecte );
 
             }
         }
-        //----enregitrer l'emploi ------------------------
-        return mav;
+        //---- fin enregitrer l'emploi ------------------------
+        return "redirect:/emploi";
     }
 //********************************************************************************************/
 

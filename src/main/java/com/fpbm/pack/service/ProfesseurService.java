@@ -16,7 +16,10 @@ public interface ProfesseurService {
     public Professeur save(Professeur prof) ;
 
     public Professeur getOne(long id) ;
-    public Professeur update(Professeur prof,long id);
+    public Professeur update(Professeur prof,long id,int charge_horaire,int charge_hor_affecte);
     public void delete(long id) ;
     public ArrayList<Professeur> findByDep(Departement dep) ;
+    public void reinstaliser_charge_horaire_dispo();
+    public void reinstaliser_charge_horaire_affect();
+
 }

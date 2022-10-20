@@ -29,4 +29,9 @@ public class ProfesseurHasModuleServiceImpl implements ProfesseurHasModuleServic
     public void delete(long id) {}
     //-------------------------------
     public ArrayList<ProfesseurHasModule> findBySemester(Semester semester){return Repo.findBySemester(semester);}
+
+    @Override
+    public void deleteall(){Repo.deleteall();}
+    @Override
+    public void auto_increment_to_one(){Repo.auto_increment_to_one();}
 }

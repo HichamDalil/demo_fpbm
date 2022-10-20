@@ -15,4 +15,6 @@ public interface ProfesseurHasModuleService {
     public void delete(long id) ;
     //-----------------------------------
     public ArrayList<ProfesseurHasModule> findBySemester(Semester semester);
+    public void deleteall();
+    public void auto_increment_to_one();
 }
